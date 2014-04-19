@@ -15,10 +15,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true
 
+  config.berkshelf.enabled = true
+
   # Tell Vagrant where the project files are since PHPStorm allows us to point to vagrantfiles outside of the project
   # root.  Allows for a cleaner project file structure.  Comment this out and use the other option if you would like
   # to use the default.
-  config.vm.synced_folder "e:/htdocs/#{ENV['SITE_ALIAS']}", "/vagrant/public/#{ENV['SITE_ALIAS']}", type: "nfs"
+  config.vm.synced_folder "#{ENV['PROJECTS_DIR']}#{ENV['SITE_ALIAS']}", "/vagrant/public/#{ENV['SITE_ALIAS']}", type: "nfs"
   #config.vm.synced_folder ".", "/vagrant", :type => "nfs"
 
   # Use VBoxManage to customize the VM. For example to change memory:
