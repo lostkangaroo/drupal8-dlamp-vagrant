@@ -33,21 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # requires omnibus plugin for vagrant
   config.omnibus.chef_version = :latest
 
-  # Enable provisioning with chef solo, specifying a cookbooks path, roles
-  # path, and data_bags path (all relative to this Vagrantfile), and adding
-  # some recipes and/or roles.
-  #
-  # config.vm.provision "chef_solo" do |chef|
-  #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
-  #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
-  #   chef.add_role "web"
-  #
-  #   # You may also specify custom JSON attributes:
-  #   chef.json = { :mysql_password => "foo" }
-  # end
-
+  # Enable provisioning with chef solo
   config.vm.provision "chef_solo" do |chef|
     chef.cookbooks_path = "cookbooks"
 
@@ -61,8 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.json = {
       :vhost => {
         :www_root => "/vagrant/public/#{ENV['SITE_ALIAS']}",
-        :localhost_alias =>
-        "#{ENV['SITE_ALIAS']}"
+        :localhost_alias => "#{ENV['SITE_ALIAS']}"
       },
       :mysql => {
         :server_root_password => 'root',
