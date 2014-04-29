@@ -19,18 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.ssh.forward_agent = true
 
-
-
-
-
-
-
-
-
-
   # Use environment variables set in phpstorm to sync project files
   config.vm.synced_folder "#{ENV['PROJECTS_DIR']}#{ENV['SITE_ALIAS']}", "/vagrant/public/#{ENV['SITE_ALIAS']}"
-
 
   # Allow the Box to be
   config.vm.provider "virtualbox" do |vb|
