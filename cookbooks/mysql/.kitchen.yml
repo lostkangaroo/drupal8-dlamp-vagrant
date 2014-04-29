@@ -1,0 +1,13 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-5.10
+
+suites:
+  - name: master
+    run_list:
+      - recipe[mysql::master]
