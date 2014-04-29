@@ -1,0 +1,23 @@
+AlignParameters:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+LineLength:
+  Max: 200
+
+HashSyntax:
+  EnforcedStyle: hash_rockets
+
+# Offence count: 3
+Documentation:
+  Enabled: false
+
+# Offence count: 1
+# Configuration parameters: CountComments.
+MethodLength:
+  Max: 33
