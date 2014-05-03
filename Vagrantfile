@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "apqc_php::php"
       chef.add_recipe "apqc_php::drush"
       chef.add_recipe "vhost"
+      chef.add_recipe "xdebug"
 
       chef.json = {
         :vhost => {
@@ -60,6 +61,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           :install_method => "git",
           :version => "master",
           :install_dir => "/usr/share/drush"
+        }
+        :xdebug => {
+          :remote_enable => 1,
+          :remote_connect_back => 1,
+          :idekey => "PHPSTORM",
+          :version => "latest"
         }
       }
     end
