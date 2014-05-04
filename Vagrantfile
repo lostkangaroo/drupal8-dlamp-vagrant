@@ -67,6 +67,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           :remote_connect_back => 1,
           :idekey => "PHPSTORM",
           :version => "latest"
+        },
+        :composer => {
+          :php_recipe => "apqc_php::php",
+          :url => "https://getcomposer.org/composer.phar",
+          :install_dir => "/usr/local/bin",
+          :bin => "/usr/local/bin/composer",
+          :install_globally => true
         }
       }
     end
