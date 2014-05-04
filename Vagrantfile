@@ -61,7 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           :install_method => "git",
           :version => "master",
           :install_dir => "/usr/share/drush"
-        }
+        },
         :xdebug => {
           :remote_enable => 1,
           :remote_connect_back => 1,

@@ -29,4 +29,20 @@ when "debian", "ubuntu", "centos", "redhat"
   link "/usr/bin/drush" do
     to "#{node['drush']['install_dir']}/drush"
   end
+
+  if node['drush']['version'] == 'master'
+    include_recipe "composer"
+    execute "drush-composer-install" do
+      cwd node['drush']['install_dir']
+      command "#{node['composer']['bin']} install --no-interaction --no-ansi --quiet --no-dev"
+      action :run
+      not_if { ::File.exists?("#{node['drush']['install_dir']}/vendor/autoload.php") }
+    end
+
+    execute "drush-composer-update" do
+      cwd node['drush']['install_dir']
+      command "#{node['composer']['bin']} update --no-interaction --no-ansi --quiet --no-dev"
+      action :run
+    end
+  end
 end
