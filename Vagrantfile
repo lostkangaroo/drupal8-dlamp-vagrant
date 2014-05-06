@@ -39,41 +39,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.provision "chef_solo" do |chef|
       chef.cookbooks_path = "cookbooks"
 
-      chef.add_recipe "apt"
-      chef.add_recipe "apache2"
-      chef.add_recipe "mysql::server"
-      chef.add_recipe "apqc_php::php"
-      chef.add_recipe "apqc_php::drush"
-      chef.add_recipe "vhost"
-      chef.add_recipe "xdebug"
+      chef.add_recipe "dlamp"
 
       chef.json = {
         :vhost => {
           :www_root => "/vagrant/public/#{ENV['SITE_ALIAS']}",
           :localhost_alias => "#{ENV['SITE_ALIAS']}"
-        },
-        :mysql => {
-          :server_root_password => 'root',
-          :allow_remote_root => true,
-          :bind_address => "0.0.0.0"
-        },
-        :drush => {
-          :install_method => "git",
-          :version => "master",
-          :install_dir => "/usr/share/drush"
-        },
-        :xdebug => {
-          :remote_enable => 1,
-          :remote_connect_back => 1,
-          :idekey => "PHPSTORM",
-          :version => "latest"
-        },
-        :composer => {
-          :php_recipe => "apqc_php::php",
-          :url => "https://getcomposer.org/composer.phar",
-          :install_dir => "/usr/local/bin",
-          :bin => "/usr/local/bin/composer",
-          :install_globally => true
         }
       }
     end
