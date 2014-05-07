@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-CPUS = 2
-MEMORY = 4096
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+ENV['SITE_ALIAS'] = "dev.local" if ENV['SITE_ALIAS'].to_s.empty?
+
+# Do all the things
+Vagrant.configure("2") do |config|
 
   # create a box based on the site alias
   config.vm.define "#{ENV['SITE_ALIAS']}" do |web|
@@ -22,13 +22,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.ssh.forward_agent = true
 
     # Use environment variables set in phpstorm to sync project files
-    web.vm.synced_folder "#{ENV['PROJECTS_DIR']}#{ENV['SITE_ALIAS']}", "/vagrant/public/#{ENV['SITE_ALIAS']}"
+    if (!ENV['PROJECTS_DIR'].to_s.empty?)
+      web.vm.synced_folder "#{ENV['PROJECTS_DIR']}#{ENV['SITE_ALIAS']}", "/vagrant/public/#{ENV['SITE_ALIAS']}", type: "nfs"
+    end
 
     # Set VirtualBox settings
     web.vm.provider "virtualbox" do |vb|
       vb.name = "#{ENV['SITE_ALIAS']}"
-      vb.memory = MEMORY
-      vb.cpus = CPUS
+      vb.memory = "4096"
+      vb.cpus = "2"
     end
 
     # Ensure latest version of chef is available
