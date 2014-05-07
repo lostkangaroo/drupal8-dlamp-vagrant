@@ -12,7 +12,6 @@ depends "composer"
 depends "apqc_php"
 depends "vhost"
 depends "xdebug"
-depends "git"
 
 %w{ ubuntu }.each do |os|
   supports os
