@@ -4,9 +4,9 @@
 Vagrant VM To quickly setup local dev environments for Drupal 8. Installs a LAMP environment with Drush and adds XDebug as well ready . Integrates with Jetbrains PhpStorm to clone a single environment for multipule projects. Can also be used as a standalone vagrant solution to quickly configure a development VM.
 
 ### Requirements
-Vagrant [http://www.vagrantup.com/downloads.html]
-VirtualBox 4.3.8 [https://www.virtualbox.org/wiki/Download_Old_Builds_4_3]
-Vagrant Plugin vagrant-omnibus
+* Vagrant [http://www.vagrantup.com/downloads.html]
+* VirtualBox 4.3.8 [https://www.virtualbox.org/wiki/Download_Old_Builds_4_3]
+* Vagrant Plugin vagrant-omnibus
 
 ### Installation
 1. Download and Install Vagrant and VirtualBox.
