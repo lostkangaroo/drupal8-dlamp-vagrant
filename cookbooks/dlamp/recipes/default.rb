@@ -33,7 +33,6 @@ node.default['drush']['install_dir'] = "/usr/share/drush"
 # XDebug
 node.default['xdebug']['remote_enable'] = 1
 node.default['xdebug']['remote_connect_back'] = 1
-node.default['xdebug']['idekey'] = "PHPSTORM"
 node.default['xdebug']['version'] = "latest"
 
 # Composer
