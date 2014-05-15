@@ -1,7 +1,7 @@
 name             "dlamp"
 license          "Apache 2.0"
 description      "Installs a LAMP + Drush development environment"
-version          "1.0.0"
+version          "1.0.1"
 
 recipe           "dlamp", "Installs a LAMP + Drush development environment"
 

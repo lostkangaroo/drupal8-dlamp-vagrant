@@ -38,6 +38,9 @@ node.default['xdebug']['version'] = "latest"
 # Composer
 node.default['composer']['php_recipe'] = "apqc_php::php"
 
+# vhost
+node.default['vhost']['allow_override'] = "ALL"
+
 # Recipe Run List
 require_recipe "apt"
 require_recipe "apache2"
