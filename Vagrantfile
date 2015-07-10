@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     # Set VirtualBox settings
     web.vm.provider "virtualbox" do |vb|
       vb.name = "#{ENV['SITE_ALIAS']}"
-      vb.memory = "4096"
+      vb.memory = "6000"
       vb.cpus = "2"
     end
 
