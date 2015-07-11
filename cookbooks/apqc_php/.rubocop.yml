@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - test/**/*
+    - files/**/*
+    - .kitchen/**/*
+
+LineLength:
+  Max: 150
+Style/FileName:
+  Enabled: false

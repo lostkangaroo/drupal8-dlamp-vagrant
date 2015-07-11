@@ -1,5 +1,4 @@
-site :opscode
+source 'https://supermarket.chef.io'
 metadata
 
-cookbook "apache2"
-cookbook "drush", git: 'https://github.com/msonnabaum/chef-drush.git'
+cookbook 'drush', git: 'https://github.com/neclimdul/chef-drush.git', branch: 'drush-composer'

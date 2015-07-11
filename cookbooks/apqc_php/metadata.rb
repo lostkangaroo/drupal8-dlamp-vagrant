@@ -1,10 +1,14 @@
-name             "apqc_php"
-maintainer       "James Gilliland"
-maintainer_email "jgilliland@apqc.org"
-license          "All rights reserved"
-description      "Installs/Configures PHP"
+name 'apqc_php'
+maintainer 'James Gilliland'
+maintainer_email 'jgilliland@apqc.org'
+license 'All rights reserved'
+description 'Installs/Configures PHP'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.0"
+version '2.0.4'
 
-depends "apache2"
-depends "drush"
+supports 'ubuntu'
+
+depends 'apt'
+depends 'drush'
+depends 'composer'
+depends 'apache2'
