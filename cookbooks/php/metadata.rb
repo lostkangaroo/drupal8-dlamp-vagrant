@@ -1,18 +1,18 @@
 name              'php'
-maintainer        'Opscode, Inc.'
-maintainer_email  'cookbooks@opscode.com'
+maintainer        'Chef Software, Inc.'
+maintainer_email  'cookbooks@getchef.com'
 license           'Apache 2.0'
 description       'Installs and maintains php and php modules'
-version           '1.4.7'
+version           '1.6.0'
 
 depends 'build-essential'
 depends 'xml'
-depends 'mysql'
+depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
 depends 'windows'
 depends 'iis'
 
-%w{ debian ubuntu centos redhat fedora scientific amazon windows oracle }.each do |os|
+%w(debian ubuntu centos redhat fedora scientific amazon windows oracle).each do |os|
   supports os
 end
 
