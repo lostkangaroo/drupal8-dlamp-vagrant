@@ -1,11 +1,16 @@
 AllCops:
-  Excludes:
-    - vendor/**
-    - ruby/**
+  Exclude:
+    - vendor/**/*
+    - ruby/**/*
+    - test/**/*
+    - files/**/*
+    - .kitchen/**/*
 
 AlignParameters:
   Enabled: false
 Encoding:
+  Enabled: false
+UselessAssignment:
   Enabled: false
 LineLength:
   Max: 300
@@ -17,3 +22,5 @@ IfUnlessModifier:
   Enabled: false
 TrivialAccessors:
   ExactNameMatch: true
+Style/RegexpLiteral:
+  Enabled: false

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: apache2
-# Recipe:: dav_svn
+# Recipe:: mod_dav_svn
 #
-# Copyright 2008-2009, Opscode, Inc.
+# Copyright 2008-2009, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: apache2
-# Recipe:: ssl
+# Recipe:: mod_ssl
 #
-# Copyright 2008-2013, Opscode, Inc.
+# Copyright 2008-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-unless node['apache']['listen_ports'].include?('443')
-  node.set['apache']['listen_ports'] = node['apache']['listen_ports'] + ['443']
+unless node['apache']['listen_ports'].include?(node['apache']['mod_ssl']['port'])
+  node.default['apache']['listen_ports'] = node['apache']['listen_ports'] + [node['apache']['mod_ssl']['port']]
 end
 
+include_recipe 'apache2::default'
+
 if platform_family?('rhel', 'fedora', 'suse')
-  package 'mod_ssl' do
+  package node['apache']['mod_ssl']['pkg_name'] do
     notifies :run, 'execute[generate-module-list]', :immediately
   end
 
@@ -32,12 +34,16 @@ if platform_family?('rhel', 'fedora', 'suse')
 end
 
 template 'ssl_ports.conf' do
-  path      "#{node['apache']['dir']}/ports.conf"
-  source    'ports.conf.erb'
-  mode      '0644'
-  notifies  :restart, 'service[apache2]'
+  path "#{node['apache']['dir']}/ports.conf"
+  source 'ports.conf.erb'
+  mode '0644'
+  notifies :restart, 'service[apache2]', :delayed
 end
 
 apache_module 'ssl' do
   conf true
+end
+
+if node['apache']['version'] == '2.4'
+  include_recipe 'apache2::mod_socache_shmcb'
 end

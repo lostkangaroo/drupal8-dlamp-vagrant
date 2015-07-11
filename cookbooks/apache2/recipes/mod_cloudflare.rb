@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: apache2
-# Recipe:: cloudflare
+# Recipe:: mod_cloudflare
 #
-# Copyright 2008-2013, Opscode, Inc.
+# Copyright 2008-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 #
 
 apt_repository 'cloudflare' do
-  uri          'http://pkg.cloudflare.com'
+  uri 'http://pkg.cloudflare.com'
   distribution node['lsb']['codename']
-  components   ['main']
-  key          'http://pkg.cloudflare.com/pubkey.gpg'
-  action       :add
+  components ['main']
+  key 'http://pkg.cloudflare.com/pubkey.gpg'
+  action :add
 end
 
 package 'libapache2-mod-cloudflare' do

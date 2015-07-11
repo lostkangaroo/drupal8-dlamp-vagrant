@@ -2,6 +2,146 @@ apache2 Cookbook Changelog
 ==========================
 This file is used to list changes made in each version of the apache2 cookbook.
 
+v3.1.0 (2015-05-25)
+-------------------
+
+- [GH-315] Fix `apache.default_site_name` .conf extension references to ensure deletion
+- [GH-258] Use `apache.default_site_name` for consistency, minimize hardcoding of filenames
+- [GH-259] Add `&& sleep 1` to end of apache restart command on rhel-based systems using apache2.2
+- [GH-271] Remove FreeBSD 9.x, Red Hat and CentOS 5.x and OpenSUSE 11.x Series from tests and focus on newer releases
+- [GH-276] Add psych gem to development gems
+- [GH-293] Add `apache.mod_fastcgi.install_method` flag to allow install of mod_fastcgi from source (even on Debian family)
+- [GH-285] Made `apache.devel_package` configurable based on platform, including support for Amazon Linux.
+- [GH-316] Update Opscode references to Chef
+- [GH-318] Apply default recipe in all definitions
+- [GH-320] Add attribute to adjust `apache.default_site_port`
+- [GH-321] Fix issue with default_site name in not_if guards
+- [GH-322] Add `apache.mod_ssl.pkg_name` to allow custom mod_ssl package names. Set defaults for supported platforms including Amazon Linux
+- [GH-323] Don't create the default site configuration file in `sites-available` unless it is enabled.
+- [GH-324] Add `apache.mod_ssl.port` to set the default ssl port to something other than 443
+- [GH-328] Add the ability to pass in a pipe as to log
+- [GH-332] `SSLStrictSNIVHostCheck` is only written to config if enabled to avoid breaking apache prior to 2.2.12.
+- [GH-334] Removed `iptables`, `god-monitor`, and `logrotate` recipes to avoid having external dependencies. These services should be managed in a wrapper cookbook going forward.
+- [GH-339] Allow custom names for php so_filename (`node['apache']['mod_php5']['so_filename']`)
+
+
+v3.0.1 (2015-02-11)
+-------------------
+
+- [GH-310] Ubuntu Apache 2.2 requires the lock_dir to be owned by www-data
+- [GH-309] Clarify that apache.version is a string
+- [GH-305] Restart service after MPM changes
+- [GH-304] Don't install systemd module on Amazon Linux
+- [GH-298] Add non-threaded MPM break notice for PHP users
+- [GH-296] Create lock_dir automatically
+
+v3.0.0 (2014-11-30)
+-------------------
+Major version update because of SSL Improvements and new platform MPM and Version defaults.
+
+- [GH-286] Refactor MPM and Apache version defaults: default is now apache 2.4
+- Note: set `apache.mpm` to `prefork` if you are using `mod_php` in Ubuntu >=14.04
+- [GH-281] mod_ssl: Disable SSLv3 by default to protect against POODLE attack (CVE-2014-3566)
+- [GH-280] mod_ssl: Major update with modern Cipher Suite, and best practices.
+  Updated to a more modern default `apache.mod_ssl.cipher_suite`.
+  Added the following additional mod_ssl attributes
+  * `apache.mod_ssl.honor_cipher_order`
+  * `apache.mod_ssl.insecure_renegotiation`
+  * `apache.mod_ssl.strict_sni_vhost_check`
+  * `apache.mod_ssl.session_cache_timeout`
+  * `apache.mod_ssl.compression`
+  * `apache.mod_ssl.use_stapling`
+  * `apache.mod_ssl.stapling_responder_timeout`
+  * `apache.mod_ssl.stapling_return_responder_errors`
+  * `apache.mod_ssl.stapling_cache`
+  * `apache.mod_ssl.pass_phrase_dialog`
+  * `apache.mod_ssl.mutex`
+  * `apache.mod_ssl.directives`
+- [GH-278] Improved chefspec tests execution time
+- [GH-277] Optimize files watching for Guard on Win32 platform
+- [GH-270] Don't attempt start until after configuration is written
+- [GH-268] Now uses chefspec 4.1
+- [GH-267] Use Supermarket as the Berkshelf 3 source
+- [GH-266] Rubocop based ruby style/syntax improvements
+- [GH-264] mod_ssl: Add new attribute for to be ready to any custom directive
+- [GH-249] Don't prepend Apache log path when requesting error logging to syslog
+- [GH-247] Explicitly include mod_ldap before mod_authnz_ldap
+- [GH-243] Expand mpm options for different distros/versions.
+- [GH-239] Added `apache.mod_php5.install_method` attribute defaults to `package`. Install packages unless PHP is compiled from source.
+- OneHealth Solutions was acquired by Viverae
+- Remove ArchLinux pacman as a dependency and handle similar to apt, yum, zypper
+- Adjust ubuntu apache 2.4 docroot_dir to match package (from /var/www to /var/www/html)
+- [GH-238] Bump service config syntax check guard timeout to 10 seconds
+- [GH-235] Removed `apache2::mpm_itk` which is not part of core and therefore should be its own cookbook
+- [GH-234] /var/run/httpd/mod_fcgid directory now belongs to apache on Fedora/RHEL systems.
+- [GH-233] Default web_app template should return 503 status code when maintenance file is present
+- [GH-232] Cookbook now deletes a2* if they are symlinks before dropping template versions
+- [GH-222] Set TraceEnable to off by default.
+- [GH-213] Adjust chefspec to use the package resource on FreeBSD (previously freebsd_package)
+- [GH-212] New attribute apache.locale which sets LANG. defaults to 'C'
+- [GH-210] Clarify web_app definition usage around configuration templates.
+- [GH-208] `apache_conf` now accepts `source` and `cookbook` parameters.
+
+v2.0.0 (2014-08-06)
+--------------------
+Major version update because of major overhaul to support Apache 2.4 and a2enconf and a2endisconf changes.
+
+- [GH-204] mod_auth_openid: Added `apache.mod_auth_openid.version` attribute
+- FreeBSD support has been improved with the release of chef 11.14.2, portsnap is no longer used in favor of pkgng.
+- [GH-157] - Apache will only be started when a configuration test passes, this allows the chef run to fix any broken configuration without failing the chef run.
+- `apache.log_dir` directory is now 0755 on all platforms (including the debian platform family)
+- [GH-166, GH-173] - `conf.d` is no longer used and replaced by `conf-available` and `conf-enabled` managed via the `a2enconf` and `a2disconf` scripts
+- [GH-166, GH-173] - All configuration files need to end in `.conf` for them to be loaded
+- [GH-173] - Perl is a required package on all platforms to support the a2* scripts as we now use the debian versions directly.
+- [GH-193] - per MPM settings: `maxclients` is now `maxrequestworkers`
+- [GH-194] - per MPM settings: `maxrequestsperchild` is now `maxconnectionsperchild`
+- [GH-161] - Added support for CentOS 7
+- [GH-180] - Improved SuSE support
+- [GH-100] - Apache HTTP 2.4 support
+  This provides Apache 2.4 support in a backwards compatible way.
+  It adds the following new attributes:
+  - `apache.version` - This defaults to `2.2` and if changed to `2.4`; it triggers and assumes 2.4 packages will be installed.
+  - `apache.mpm` -  In 2.4 mode, this specifies which mpm to install. Default is `prefork`.
+  - `apache.run_dir`
+  - `apache.lock_dir`
+  - `apache.libexec_dir` replaces `apache.libexecdir`
+  - `apache.prefork.maxrequestworkers` replaces `apache.prefork.maxclients`
+  - `apache.prefork.maxconnectionsperchild` replaces `apache.prefork.maxrequestsperchild`
+  - `apache.worker.threadlimit`
+  - `apache.worker.maxrequestworkers` replaces `apache.worker.maxclients`
+  - `apache.worker.maxconnectionsperchild `replaces `apache.worker.maxrequestsperchild`
+  - `apache.event.startservers`
+  - `apache.event.serverlimit`
+  - `apache.event.minsparethreads`
+  - `apache.event.maxsparethreads`
+  - `apache.event.threadlimit`
+  - `apache.event.threadsperchild`
+  - `apache.event.maxrequestworkers`
+  - `apache.event.maxconnectionsperchild`
+  - `apache.itk.startservers`
+  - `apache.itk.minspareservers`
+  - `apache.itk.maxspareservers`
+  - `apache.itk.maxrequestworkers`
+  - `apache.itk.maxconnectionsperchild`
+
+  Apache 2.4 Upgrade Notes:
+
+  Since the changes between apache 2.2 and apache 2.4 are pretty significant, we are unable to account for all changes needed for your upgrade.  Please take a moment to familiarize yourself with the Apache Software Foundation provided upgrade documentation before attempting to use this cookbook with apache 2.4. See http://httpd.apache.org/docs/current/upgrading.html
+
+  - This cookbook does not automatically specify which version of apache to install. We are at the mercy of the `package` provider. It is important, however, to make sure that you configure the `apache.version` attribute to match. For your convenience, we try to set reasonable defaults based on different platforms in our test suite.
+  - `mod_proxy` -   In 2.4 mode, `apache.proxy.order`, `apache.proxy.deny_from`, `apache.proxy.allow_from` are ignored, as the attributes can not be supported in a backwards compatible way. Please use `apache.proxy.require` instead.
+
+v1.11.0 (2014-07-25)
+--------------------
+- [GH-152] - Checking if server_aliases is defined in example
+- [GH-106] - Only turn rewrite on once in web_app.conf.erb
+- [GH-156] - Correct mod_basic/digest recipe names in README
+- Recipe iptables now includes the iptables::default recipe
+- Upgrade test-kitchen to latest version
+- Replaced minitest integration tests with serverspec tests
+- Added chefspec tests
+
+
 v1.10.4 (2014-04-23)
 --------------------
 - [COOK-4249] mod_proxy_http requires mod_proxy
@@ -14,7 +154,7 @@ v1.10.2 (2014-04-09)
 - [COOK-4492] - Fix service[apache2] CHEF-3694 duplication
 - [COOK-4493] - Fix template[ports.conf] CHEF-3694 duplication
 
-As of 2014-04-04 and per [Community Cookbook Diversification](https://wiki.opscode.com/display/chef/Community+Cookbook+Diversification) this cookbook now maintained by OneHealth Solutions. Please be patient as we get into the swing of things.
+As of 2014-04-04 and per [Community Cookbook Diversification](https://wiki.chef.io/display/chef/Community+Cookbook+Diversification) this cookbook now maintained by OneHealth Solutions. Please be patient as we get into the swing of things.
 
 v1.10.0 (2014-03-28)
 --------------------
@@ -41,16 +181,16 @@ v1.9.1 (2014-02-27)
 v1.9.0 (2014-02-21)
 -------------------
 ### Improvement
-- **[COOK-4076](https://tickets.opscode.com/browse/COOK-4076)** - foodcritic: dependencies are not defined properly
-- **[COOK-2572](https://tickets.opscode.com/browse/COOK-2572)** - Add mod_pagespeed recipe to apache2 
+- **[COOK-4076](https://tickets.chef.io/browse/COOK-4076)** - foodcritic: dependencies are not defined properly
+- **[COOK-2572](https://tickets.chef.io/browse/COOK-2572)** - Add mod_pagespeed recipe to apache2
 
 ### Bug
-- **[COOK-4043](https://tickets.opscode.com/browse/COOK-4043)** - apache2 cookbook does not depend on 'iptables'
-- **[COOK-3919](https://tickets.opscode.com/browse/COOK-3919)** - Move the default pidfile for apache2 on Ubuntu 13.10 or greater
-- **[COOK-3863](https://tickets.opscode.com/browse/COOK-3863)** - Add recipe for mod_jk
-- **[COOK-3804](https://tickets.opscode.com/browse/COOK-3804)** - Fix incorrect datatype for apache/default_modules, use recipes option in metadata
-- **[COOK-3800](https://tickets.opscode.com/browse/COOK-3800)** - Cannot load modules that use non-standard module identifiers
-- **[COOK-1689](https://tickets.opscode.com/browse/COOK-1689)** - The perl package name should be configurable
+- **[COOK-4043](https://tickets.chef.io/browse/COOK-4043)** - apache2 cookbook does not depend on 'iptables'
+- **[COOK-3919](https://tickets.chef.io/browse/COOK-3919)** - Move the default pidfile for apache2 on Ubuntu 13.10 or greater
+- **[COOK-3863](https://tickets.chef.io/browse/COOK-3863)** - Add recipe for mod_jk
+- **[COOK-3804](https://tickets.chef.io/browse/COOK-3804)** - Fix incorrect datatype for apache/default_modules, use recipes option in metadata
+- **[COOK-3800](https://tickets.chef.io/browse/COOK-3800)** - Cannot load modules that use non-standard module identifiers
+- **[COOK-1689](https://tickets.chef.io/browse/COOK-1689)** - The perl package name should be configurable
 
 
 v1.8.14
@@ -81,36 +221,36 @@ Locking yum dependency to '< 3'
 v1.8.4
 ------
 ### Bug
-- **[COOK-3769](https://tickets.opscode.com/browse/COOK-3769)** - Fix a critical bug where the `apache_module` could not enable modules
+- **[COOK-3769](https://tickets.chef.io/browse/COOK-3769)** - Fix a critical bug where the `apache_module` could not enable modules
 
 
 v1.8.2
 ------
 ### Bug
-- **[COOK-3766](https://tickets.opscode.com/browse/COOK-3766)** - Fix an issue where the `mod_ssl` recipe fails due to a missing attribute
+- **[COOK-3766](https://tickets.chef.io/browse/COOK-3766)** - Fix an issue where the `mod_ssl` recipe fails due to a missing attribute
 
 
 v1.8.0
 ------
 ### Bug
-- **[COOK-3680](https://tickets.opscode.com/browse/COOK-3680)** - Update template paths
-- **[COOK-3570](https://tickets.opscode.com/browse/COOK-3570)** - Apache cookbook breaks on RHEL / CentOS 6
-- **[COOK-2944](https://tickets.opscode.com/browse/COOK-2944)** - Fix foodcritic failures
-- **[COOK-2893](https://tickets.opscode.com/browse/COOK-2893)** - Improve mod_auth_openid recipe with guards and idempotency
-- **[COOK-2758](https://tickets.opscode.com/browse/COOK-2758)** - Fix use of non-existent attribute
+- **[COOK-3680](https://tickets.chef.io/browse/COOK-3680)** - Update template paths
+- **[COOK-3570](https://tickets.chef.io/browse/COOK-3570)** - Apache cookbook breaks on RHEL / CentOS 6
+- **[COOK-2944](https://tickets.chef.io/browse/COOK-2944)** - Fix foodcritic failures
+- **[COOK-2893](https://tickets.chef.io/browse/COOK-2893)** - Improve mod_auth_openid recipe with guards and idempotency
+- **[COOK-2758](https://tickets.chef.io/browse/COOK-2758)** - Fix use of non-existent attribute
 
 ### New Feature
-- **[COOK-3665](https://tickets.opscode.com/browse/COOK-3665)** - Add recipe for mod_userdir
-- **[COOK-3646](https://tickets.opscode.com/browse/COOK-3646)** - Add recipe for mod_cloudflare
-- **[COOK-3213](https://tickets.opscode.com/browse/COOK-3213)** - Add recipe for mod_info
+- **[COOK-3665](https://tickets.chef.io/browse/COOK-3665)** - Add recipe for mod_userdir
+- **[COOK-3646](https://tickets.chef.io/browse/COOK-3646)** - Add recipe for mod_cloudflare
+- **[COOK-3213](https://tickets.chef.io/browse/COOK-3213)** - Add recipe for mod_info
 
 ### Improvement
-- **[COOK-3656](https://tickets.opscode.com/browse/COOK-3656)** - Parameterize apache2 binary
-- **[COOK-3562](https://tickets.opscode.com/browse/COOK-3562)** - Allow mod_proxy settings to be configured as attributes
-- **[COOK-3326](https://tickets.opscode.com/browse/COOK-3326)** - Fix default_test to use ServerTokens attribute
-- **[COOK-2635](https://tickets.opscode.com/browse/COOK-2635)** - Add support for SVG mime types
-- **[COOK-2598](https://tickets.opscode.com/browse/COOK-2598)** - FastCGI Module only works on Debian-based platforms
-- **[COOK-1984](https://tickets.opscode.com/browse/COOK-1984)** - Add option to configure the address apache listens to
+- **[COOK-3656](https://tickets.chef.io/browse/COOK-3656)** - Parameterize apache2 binary
+- **[COOK-3562](https://tickets.chef.io/browse/COOK-3562)** - Allow mod_proxy settings to be configured as attributes
+- **[COOK-3326](https://tickets.chef.io/browse/COOK-3326)** - Fix default_test to use ServerTokens attribute
+- **[COOK-2635](https://tickets.chef.io/browse/COOK-2635)** - Add support for SVG mime types
+- **[COOK-2598](https://tickets.chef.io/browse/COOK-2598)** - FastCGI Module only works on Debian-based platforms
+- **[COOK-1984](https://tickets.chef.io/browse/COOK-1984)** - Add option to configure the address apache listens to
 
 
 v1.7.0
