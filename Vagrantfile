@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     web.ssh.forward_agent = true
 
     # Use environment variables set in phpstorm to sync project files, nfs is ignored on windows systems
-    if (!ENV['PROJECTS_DIR'].to_s.empty?)
+    if (!ENV['PROJECT_DIR'].to_s.empty?)
       web.vm.synced_folder "#{ENV['PROJECT_DIR']}", "/vagrant/public/#{ENV['SITE_ALIAS']}", type: "nfs"
     end
 
