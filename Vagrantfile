@@ -11,8 +11,7 @@ Vagrant.configure("2") do |config|
   # create a box based on the site alias
   config.vm.define "#{ENV['SITE_ALIAS']}" do |web|
     # Every Vagrant virtual environment requires a box to build off of.
-    web.vm.box = "Precise64"
-    web.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    web.vm.box = "ubuntu/trusty64"
     web.vm.box_check_update = true
 
     # Configure network fun
