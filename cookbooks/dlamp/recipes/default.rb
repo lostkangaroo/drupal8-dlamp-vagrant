@@ -34,9 +34,10 @@ node.default['drush']['install_dir'] = "/usr/share/drush"
 node.default['xdebug']['remote_enable'] = 1
 node.default['xdebug']['remote_connect_back'] = 1
 node.default['xdebug']['version'] = "latest"
+node.default['xdebug']['max_nesting_level'] = 500
 
 # Composer
-node.default['composer']['php_recipe'] = "apqc_php::php"
+node.default['composer']['php_recipe'] = "php::default"
 
 # vhost
 node.default['vhost']['allow_override'] = "ALL"
@@ -44,8 +45,13 @@ node.default['vhost']['allow_override'] = "ALL"
 # Recipe Run List
 include_recipe "apt"
 include_recipe "apache2"
+include_recipe "apache2::mod_php5"
 include_recipe "mysql::server"
-include_recipe 'apqc_php::php'
+include_recipe "php::default"
+include_recipe "php::module_mysql"
+include_recipe "php::module_gd"
+include_recipe "php::module_sqlite3"
+include_recipe "sqlite"
 include_recipe "apqc_php::drush"
 include_recipe "vhost"
 include_recipe "xdebug"
