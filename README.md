@@ -6,8 +6,8 @@ Vagrant VM To quickly setup local dev environments for Drupal 8. Installs a LAMP
 ***This is not designed for use in production environments as the security level is pretty low***
 
 ### Requirements
-* Vagrant [http://www.vagrantup.com/downloads.html]
-* VirtualBox 4.3.8 [https://www.virtualbox.org/wiki/Download_Old_Builds_4_3]
+* Vagrant 1.7.2 [http://www.vagrantup.com/downloads.html]
+* VirtualBox 4.3.26 [https://www.virtualbox.org/wiki/Download_Old_Builds_4_3]
 * Vagrant Plugin vagrant-omnibus
 
 ### Quick Info
