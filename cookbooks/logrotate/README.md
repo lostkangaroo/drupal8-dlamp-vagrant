@@ -38,7 +38,7 @@ node.override['logrotate']['global']['nocompress'] = true
 The same is true of frequency directives; to be certain the frequency directive you want is included in the global configuration, you should override the ones you don't want as false:
 
 ```ruby
-%w[ daily, weekly, yearly ].do |freq|
+%w[ daily weekly yearly ].each do |freq|
   node.override['logrotate']['global'][freq] = false
 end
 node.override['logrotate']['global']['monthly'] = true
@@ -98,8 +98,11 @@ The definition takes the following params:
 - `template_group`: the group of the logrotate template (default "root")
 - `cookbook`: select the template source from the specified cookbook. By default it will use the template from the logrotate cookbook.
 - `create`: creation parameters for the logrotate "create" config, follows the form "mode owner group". This is an optional parameter, and is nil by default.
+- `firstaction`: lines to be executed once before all log files that match the wildcarded pattern are rotated, before pre-rotate  script is run and only if at least one log will actually be rotated
 - `postrotate`: lines to be executed after the log file is rotated
 - `prerotate`: lines to be executed before the log file is rotated
+- `lastaction`: lines to be executed once after  all  log files  that  match  the  wildcarded  pattern  are rotated, after postrotate script is run  and  only  if  at  least  one  log  is rotated
+- `rotate`: Log files are rotated this many times before being removed or mailed.
 - `sharedscripts`: if true, the sharedscripts options is specified which makes sure prescript and postscript commands are run only once (even if multiple files match the path)
 
 
@@ -148,11 +151,11 @@ end
 License & Authors
 -----------------
 - Author:: Scott M. Likens (<scott@likens.us>)
-- Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Joshua Timberman (<joshua@chef.io>)
 
 ```text
 Copyright 2009, Scott M. Likens
-Copyright 2011-2012, Opscode, Inc.
+Copyright 2011-2012, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

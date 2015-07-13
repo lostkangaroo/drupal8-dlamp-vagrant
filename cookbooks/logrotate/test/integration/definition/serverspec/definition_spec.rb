@@ -1,6 +1,5 @@
 require 'serverspec'
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
 describe 'logrotate::default' do
   describe file('/etc/logrotate.d/tomcat-myapp') do
@@ -50,5 +49,9 @@ describe 'logrotate::default' do
         firstaction
       )
     end
+  end
+
+  describe file('/etc/logrotate.d/tomcat-myapp-sharedscripts') do
+    it { should contain "sharedscripts" }
   end
 end
