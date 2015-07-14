@@ -11,13 +11,32 @@ MethodLength:
   Enabled: false
 
 LineLength:
-  Max: 330
-
-HashSyntax:
-  EnforcedStyle: hash_rockets
+  Enabled: false
 
 Documentation:
   Enabled: false
 
+PerceivedComplexity:
+  Enabled: false
+
 CyclomaticComplexity:
-  Max: 10
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - 'Guardfile'
+
+Style/GuardClause:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
