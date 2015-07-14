@@ -7,6 +7,7 @@
 # Attribute:: php
 #
 # Copyright 2011, Opscode, Inc.
+# Copyright 2015, APQC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -56,6 +57,8 @@ else
   default['apqc_php']['fpm_user']      = 'www-data'
   default['apqc_php']['fpm_group']     = 'www-data'
 end
+
+default['apqc_php']['php_version'] = '5.4'
 
 #### INI SETTINGS ###
 

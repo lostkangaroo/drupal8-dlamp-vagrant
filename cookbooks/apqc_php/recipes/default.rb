@@ -4,8 +4,6 @@
 #
 # Copyright (C) 2015 APQC
 #
-# All rights reserved - Do Not Redistribute
-#
 
 # Setup modern debian folders and tools.
 directory '/usr/share/php5/sapi/' do

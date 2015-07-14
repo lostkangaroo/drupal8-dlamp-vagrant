@@ -4,8 +4,6 @@
 #
 # Copyright (C) 2015 APQC
 #
-# All rights reserved - Do Not Redistribute
-#
 
 include_recipe 'apqc_php::default'
 

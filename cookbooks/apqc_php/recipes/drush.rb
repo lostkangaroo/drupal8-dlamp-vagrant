@@ -2,9 +2,7 @@
 # Cookbook Name:: apqc_php
 # Recipe:: drush
 #
-# Copyright (C) 2013 APQC
-#
-# All rights reserved - Do Not Redistribute
+# Copyright (C) 2015 APQC
 #
 
 include_recipe 'apqc_php::sapi_cli'

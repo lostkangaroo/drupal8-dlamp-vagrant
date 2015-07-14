@@ -4,8 +4,6 @@
 #
 # Copyright (C) 2015 APQC
 #
-# All rights reserved - Do Not Redistribute
-#
 
 package 'libyaml-dev' do
   action :install
