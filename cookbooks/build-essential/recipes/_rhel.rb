@@ -2,7 +2,7 @@
 # Cookbook Name:: build-essential
 # Recipe:: rhel
 #
-# Copyright 2008-2013, Opscode, Inc.
+# Copyright 2008-2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ potentially_at_compile_time do
   package 'kernel-devel'
   package 'make'
   package 'm4'
+  package 'patch'
 
   # Ensure GCC 4 is available on older pre-6 EL
   if node['platform_version'].to_i < 6
