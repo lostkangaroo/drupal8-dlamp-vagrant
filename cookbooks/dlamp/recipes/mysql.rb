@@ -2,7 +2,7 @@
 # Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
 # Cookbook Name:: dlamp
 # Recipe:: mysql
-# Description:: Sets a runlist and default values to use in building a Drupal 8
+# Description:: Sets up the default mysql instance
 #   Development Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,8 @@
 mysql_service 'default' do
   port '3306'
   version '5.5'
-  bind_address :mysql['bind_address']
-#  allow_remote_root :mysql['allow_remote_root']
-  initial_root_password :mysql['server_root_password']
+  bind_address node['mysql']['bind_address']
+  initial_root_password node['mysql']['server_root_password']
+  socket '/var/run/mysqld/mysqld.sock'
   action [:create, :start]
 end

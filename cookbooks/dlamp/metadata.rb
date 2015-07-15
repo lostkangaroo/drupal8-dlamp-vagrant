@@ -13,6 +13,7 @@ depends "xdebug"
 depends "phpunit"
 depends "logrotate"
 depends "sqlite"
+depends "database"
 
 %w{ ubuntu }.each do |os|
   supports os

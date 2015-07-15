@@ -41,15 +41,14 @@ node.default['vhost']['allow_override'] = "ALL"
 node.default['apqc_php']['php_version'] = '5.5'
 
 # MySQL
-# node.default['mysql']['server_root_password'] = 'root'
-# node.default['mysql']['allow_remote_root'] = true
-# node.default['mysql']['bind_address'] = "0.0.0.0"
+node.default['mysql']['server_root_password'] = 'root'
+node.default['mysql']['allow_remote_root'] = true
+node.default['mysql']['bind_address'] = "0.0.0.0"
 
 # Recipe Run List
 include_recipe "apt"
 include_recipe "logrotate"
 include_recipe "apache2"
-include_recipe "apache2::mod_php5"
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_env"
@@ -60,10 +59,10 @@ include_recipe "apache2::mod_negotiation"
 include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_expires"
 include_recipe "dlamp::mysql"
+# include_recipe "dlamp::mysql_user"
 include_recipe "sqlite"
 include_recipe "apqc_php::default"
 include_recipe "apqc_php::module_mysql"
-include_recipe "php::module_mysql"
 include_recipe "apqc_php::module_gd"
 include_recipe "apqc_php::module_apc"
 include_recipe "apqc_php::module_curl"
@@ -73,6 +72,7 @@ include_recipe "apqc_php::module_memcached"
 include_recipe "apqc_php::module_uuid"
 include_recipe "apqc_php::module_yaml"
 include_recipe "php::module_sqlite3"
+include_recipe "apache2::mod_php5"
 include_recipe "apqc_php::drush"
 include_recipe "vhost"
 include_recipe "xdebug"
