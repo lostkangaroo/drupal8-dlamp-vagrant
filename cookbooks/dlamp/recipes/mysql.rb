@@ -18,15 +18,11 @@
 # limitations under the License.
 #
 
-mysql_service 'mysql' do
+mysql_service 'default' do
   port '3306'
   version '5.5'
-  initial_root_password :server_root_password
+  bind_address :mysql['bind_address']
+#  allow_remote_root :mysql['allow_remote_root']
+  initial_root_password :mysql['server_root_password']
   action [:create, :start]
-end
-
-mysql_config 'mysql' do
-  source 'mysql_config.cnf.erb'
-  notifies :restart, 'mysql_service[mysql]'
-  action :create
 end

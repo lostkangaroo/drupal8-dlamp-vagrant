@@ -20,14 +20,6 @@
 
 # Default Values to use
 
-# APQC php
-node.default['apqc_php']['php_version'] = '5.5'
-
-# MySQL
-node.default['mysql']['server_root_password'] = 'root'
-node.default['mysql']['allow_remote_root'] = true
-node.default['mysql']['bind_address'] = "0.0.0.0"
-
 # Drush
 node.default['drush']['install_method'] = "git"
 node.default['drush']['version'] = "master"
@@ -45,6 +37,14 @@ node.default['composer']['php_recipe'] = "apqc_php::default"
 # vhost
 node.default['vhost']['allow_override'] = "ALL"
 
+# APQC php
+node.default['apqc_php']['php_version'] = '5.5'
+
+# MySQL
+# node.default['mysql']['server_root_password'] = 'root'
+# node.default['mysql']['allow_remote_root'] = true
+# node.default['mysql']['bind_address'] = "0.0.0.0"
+
 # Recipe Run List
 include_recipe "apt"
 include_recipe "logrotate"
@@ -59,11 +59,11 @@ include_recipe "apache2::mod_status"
 include_recipe "apache2::mod_negotiation"
 include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_expires"
-#include_recipe "mysql::server"
+include_recipe "dlamp::mysql"
 include_recipe "sqlite"
 include_recipe "apqc_php::default"
 include_recipe "apqc_php::module_mysql"
-#include_recipe "php::module_mysql"
+include_recipe "php::module_mysql"
 include_recipe "apqc_php::module_gd"
 include_recipe "apqc_php::module_apc"
 include_recipe "apqc_php::module_curl"
