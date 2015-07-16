@@ -4,15 +4,15 @@
   DocumentRoot <%= @params[:docroot] %>
   RewriteEngine On
 
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+
   <Directory <%= @params[:docroot] %>>
     Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
     AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
     Require all granted
-  </Directory>
-
-  <Directory />
-    Options FollowSymLinks
-    AllowOverride None
   </Directory>
 
   <Location /server-status>
@@ -32,5 +32,5 @@
 
   RewriteEngine On
 
-  LogLevel alert rewrite:trace3 (can be increased to trace8)
+  LogLevel alert rewrite:trace3
 </VirtualHost>
