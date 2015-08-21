@@ -34,9 +34,6 @@ node.default['xdebug']['max_nesting_level'] = 500
 # Composer
 node.default['composer']['php_recipe'] = "apqc_php::default"
 
-# vhost
-node.default['vhost']['allow_override'] = "ALL"
-
 # APQC php
 node.default['apqc_php']['php_version'] = '5.5'
 

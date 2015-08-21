@@ -43,10 +43,13 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "dlamp"
 
       chef.json = {
-        :vhost => {
-          :www_root => "/vagrant/public/#{ENV['SITE_ALIAS']}",
-          :localhost_alias => "#{ENV['SITE_ALIAS']}"
-        }
+        :vhost => [
+          {
+            :www_root => "/vagrant/public/#{ENV['SITE_ALIAS']}",
+            :localhost_alias => "#{ENV['SITE_ALIAS']}",
+            :allow_override => "ALL"
+          }
+        ]
       }
     end
   end
