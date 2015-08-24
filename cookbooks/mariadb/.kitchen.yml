@@ -1,0 +1,74 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-7.6
+    driver_config:
+      box: chef/debian-7.6
+  - name: ubuntu-12.04
+  - name: centos-6.6
+  - name: centos-7.0
+  - name: ubuntu-14.04
+    driver_config:
+        box: chef/ubuntu-14.04
+  - name: fedora-21
+
+suites:
+  - name: default
+    run_list:
+      - recipe[mariadb::default]
+    attributes:
+      mariadb:
+        use_default_repository: true
+  - name: native
+    run_list:
+      - recipe[mariadb::default]
+    attributes:
+      mariadb:
+        install:
+          prefer_os_package: true
+    includes:
+      - centos-7.0
+      - fedora-21
+  - name: replication
+    run_list:
+      - recipe[mariadb_test::replication]
+    attributes:
+      mariadb:
+        use_default_repository: true
+  - name: galera
+    run_list:
+      - recipe[mariadb::galera]
+    attributes:
+      mariadb:
+        use_default_repository: true
+  - name: datadir_changed
+    run_list:
+      - recipe[mariadb::default]
+    attributes:
+      mariadb:
+        use_default_repository: true
+        mysqld:
+          datadir: /home/mysql
+  - name: port_changed
+    run_list:
+      - recipe[mariadb::default]
+    attributes:
+      mariadb:
+        server_root_password: gsql
+        use_default_repository: true
+        mysqld:
+          port: 3307
+  - name: plugins
+    run_list:
+      - recipe[mariadb::default]
+    attributes:
+      mariadb:
+        use_default_repository: true
+        plugins:
+           audit: true
+
