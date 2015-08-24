@@ -1,8 +1,8 @@
 #
 # Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
 # Cookbook Name:: dlamp
-# Recipe:: database
-# Description:: Creates empty default database
+# Recipe:: drupal_repo
+# Description:: Clones Drupal Repo specific to version
 #   Development Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +18,11 @@
 # limitations under the License.
 #
 
-mysql2_chef_gem 'default' do
-  action :install
-end
-
-if node['drupal_database']
-  node['drupal_database'].each do |db|
-    mysql_database db['db_name'] do
-      connection(
-        :host => '127.0.0.1',
-        :username => 'root',
-        :password => node['mysql']['server_root_password']
-      )
-      action :create
-    end
+node["drupal_checkout"].each do |drupal|
+  git drupal['destination'] do
+    repository 'http://git.drupal.org/project/drupal.git'
+    checkout_branch drupal['core_version']
+    enable_checkout false
+    action :sync
   end
 end
