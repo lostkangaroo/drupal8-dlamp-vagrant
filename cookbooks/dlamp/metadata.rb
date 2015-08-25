@@ -15,6 +15,7 @@ depends "logrotate"
 depends "sqlite"
 depends "database"
 depends "mysql2_chef_gem"
+depends "ssh_known_hosts"
 
 %w{ ubuntu }.each do |os|
   supports os

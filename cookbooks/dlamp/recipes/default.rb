@@ -45,6 +45,7 @@ node.default['mysql']['bind_address'] = "0.0.0.0"
 # Recipe Run List
 include_recipe "apt"
 include_recipe "logrotate"
+include_recipe "ssh_known_hosts"
 include_recipe "apache2"
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_rewrite"
