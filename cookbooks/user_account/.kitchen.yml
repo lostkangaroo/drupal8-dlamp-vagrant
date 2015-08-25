@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-12.04
+  - name: centos-7.0
+  - name: centos-6.5
+  - name: sles-11sp3
+  - name: omnios-r151010j
+    driver_config:
+      box: omnios-r151010j
+      box_url: http://public-mirror.tamu.edu/baseboxes/omnios-r151010j.box
+
+suites:
+  - name: default
+    run_list:
+      - recipe[user-test::default]
+    attributes:
