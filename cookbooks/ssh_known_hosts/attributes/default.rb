@@ -1,9 +1,8 @@
 #
-# Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
-# Cookbook Name:: dlamp
-# Recipe:: drupal_repo
-# Description:: Clones Drupal Repo specific to version
-#   Development Environment
+# Author:: Seth Vargo (<sethvargo@gmail.com>)
+# Attributes:: default
+#
+# Copyright 2013, Seth Vargo
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,11 +17,7 @@
 # limitations under the License.
 #
 
-node["drupal_checkout"].each do |drupal|
-  git drupal['destination'] do
-    repository 'http://git.drupal.org/project/drupal.git'
-    checkout_branch drupal['core_version']
-    enable_checkout false
-    action :sync
-  end
-end
+default['ssh_known_hosts']['file'] = '/etc/ssh/ssh_known_hosts'
+default['ssh_known_hosts']['key_type'] = 'rsa,dsa'
+default['ssh_known_hosts']['cacher']['data_bag'] = 'server_data'
+default['ssh_known_hosts']['cacher']['data_bag_item'] = 'known_hosts'
