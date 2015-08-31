@@ -18,10 +18,52 @@
 # limitations under the License.
 #
 
-node["drupal_checkout"].each do |drupal|
-  git drupal['destination'] do
-    repository 'http://git.drupal.org/project/drupal.git'
-    revision drupal['core_version']
-    action :sync
-  end
+Chef::Log.info "Attempting to locate databag git_repo"
+
+if Chef::DataBag.list.key?('git_repo')
+
+  Chef::Log.info "databag loaded lets do stuff"
+   begin
+    repos = data_bag('git_repo').collect do |item|
+      repo = data_bag_item('git_repo', item)
+
+      directory '/var/www/' do
+        mode "777"
+      end
+
+      if not repo['revision']
+        repo['revision'] = "HEAD"
+        Chef::Log.info "No Repo Revision, using HEAD"
+      end
+
+      if repo['deploy_key']
+        # create a ssh key wrapper we can use if a deploy key is needed
+        file "/home/vagrant/#{repo['id']}.git_wrapper.sh" do
+          owner "vagrant"
+          mode "0755"
+          content "#!/bin/sh\nexec /usr/bin/ssh -i /home/vagrant/.ssh/#{repo['id']}.deploy_rsa \"$@\""
+        end
+
+        file "/home/vagrant/.ssh/#{repo['id']}.deploy_rsa" do
+          owner "vagrant"
+          mode "0600"
+          content repo['deploy_key']
+        end
+
+        Chef::Log.info "Adding deploy key to Vagrant user"
+      end
+
+      git repo['destination'] do
+        repository repo['repo']
+        revision repo['revision']
+        user "vagrant"
+        if repo['deploy_key']
+          ssh_wrapper "/home/vagrant/" + repo['id'] + ".git_wrapper.sh"
+        end
+        action :sync
+      end
+    end
+   rescue
+     Chef::Log.info "Could not load data bag 'git_repo'"
+   end
 end

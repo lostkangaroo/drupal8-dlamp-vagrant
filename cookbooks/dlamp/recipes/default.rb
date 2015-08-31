@@ -2,8 +2,8 @@
 # Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
 # Cookbook Name:: dlamp
 # Recipe:: default
-# Description:: Sets a runlist and default values to use in building a Drupal 8
-#   Development Environment
+# Description:: Sets a runlist to use in building a Drupal Development
+#   Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,30 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-# Default Values to use
-
-# Drush
-node.default['drush']['install_method'] = "git"
-node.default['drush']['version'] = "master"
-node.default['drush']['install_dir'] = "/usr/share/drush"
-
-# XDebug
-node.default['xdebug']['remote_enable'] = 1
-node.default['xdebug']['remote_connect_back'] = 1
-node.default['xdebug']['version'] = "latest"
-node.default['xdebug']['max_nesting_level'] = 500
-
-# Composer
-node.default['composer']['php_recipe'] = "apqc_php::default"
-
-# APQC php
-node.default['apqc_php']['php_version'] = '5.5'
-
-# MySQL
-node.default['mysql']['server_root_password'] = 'root'
-node.default['mysql']['allow_remote_root'] = true
-node.default['mysql']['bind_address'] = "0.0.0.0"
 
 # Recipe Run List
 include_recipe "apt"
@@ -75,4 +51,4 @@ include_recipe "vhost"
 include_recipe "xdebug"
 include_recipe "phpunit"
 include_recipe "dlamp::database"
-include_recipe "dlamp::drupal_checkout"
+include_recipe "dlamp::git_checkout"
