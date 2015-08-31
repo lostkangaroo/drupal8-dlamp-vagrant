@@ -49,18 +49,10 @@ Vagrant.configure("2") do |config|
             :localhost_alias => "#{ENV['SITE_ALIAS']}",
             :allow_override => "ALL"
           }
-        ],
-        :drupal_checkout => [
-          {
-            :core_version => '6.x',
-            :destination => '/var/www/d6-test.local'
-          },
-          {
-            :core_version => '8.0.x',
-            :destination => '/var/www/d8-test.local'
-          }
         ]
       }
+
+      chef.data_bags_path = 'data_bags'
     end
   end
 end
