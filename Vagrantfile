@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
         ]
       }
 
-      chef.data_bags_path = 'data_bags'
+      # chef.data_bags_path = 'data_bags'
     end
   end
 end
