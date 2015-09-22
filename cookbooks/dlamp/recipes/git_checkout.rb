@@ -62,6 +62,10 @@ if Chef::DataBag.list.key?('git_repo')
         end
         action :sync
       end
+
+      directory repo['destination'] do
+        mode "777"
+      end
     end
    rescue
      Chef::Log.info "Could not load data bag 'git_repo'"
