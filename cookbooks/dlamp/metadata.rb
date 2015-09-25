@@ -16,6 +16,7 @@ depends "sqlite"
 depends "database"
 depends "mysql2_chef_gem"
 depends "ssh_known_hosts"
+depends "ssh"
 
 %w{ ubuntu }.each do |os|
   supports os
