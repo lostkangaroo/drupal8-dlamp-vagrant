@@ -34,6 +34,7 @@ default['composer']['php_recipe'] = "apqc_php::default"
 
 # APQC php
 default['apqc_php']['php_version'] = '5.5'
+default['apqc_php']['ini_defaults']['PHP']['display_errors'] = 'On'
 
 # MySQL
 default['mysql']['server_root_password'] = 'root'

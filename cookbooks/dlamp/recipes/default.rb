@@ -29,7 +29,6 @@ end
 # Recipe Run List
 include_recipe "apt"
 include_recipe "logrotate"
-#include_recipe "ssh_known_hosts"
 include_recipe "apache2"
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_rewrite"
@@ -62,6 +61,7 @@ include_recipe "phpunit"
 include_recipe "dlamp::database"
 include_recipe "dlamp::git_checkout"
 
+# Run these the old fashioned way since the above recipes don't seem to be working correctly
 execute 'install_yaml' do
   command 'sudo pecl install yaml'
 end

@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
 
     # Ensure latest version of chef is available
     # requires omnibus plugin for vagrant
-    web.omnibus.chef_version = '12.5.1'
+    web.omnibus.chef_version = :latest
 
     # Enable provisioning with chef solo
     web.vm.provision "chef_solo" do |chef|
