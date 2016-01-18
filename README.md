@@ -34,7 +34,8 @@ Vagrant VM To quickly setup local dev environments for Drupal 8. Installs a LAMP
 4. You will then need to open the Environment Variables config using the button with `...` on it
 5. Add a variable and name it `PROJECT_DIR` set the value to the dir you store your projects
 6. Add a variable and name it `SITE_ALIAS` set the value to the uri you want to use locally for the project
-7. Close out the settings and go to `Tools->Vagrant->Up` to start up the VM
+7. If you wish to use VMware you can use `VM_PROVIDER = vmware_workstation` will default to Virtual Box
+8. Close out the settings and go to `Tools->Vagrant->Up` to start up the VM
 
 ### Standalone Environment Setup
 1. Place this repository as the root of the project.
