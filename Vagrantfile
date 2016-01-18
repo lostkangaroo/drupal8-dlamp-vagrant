@@ -11,8 +11,17 @@ Vagrant.configure("2") do |config|
   # create a box based on the site alias
   config.vm.define "#{ENV['SITE_ALIAS']}" do |web|
     # Every Vagrant virtual environment requires a box to build off of.
-    web.vm.box = "ubuntu/trusty64"
-    web.vm.box_check_update = true
+
+    # Use environment variables to set the guest
+    if (ENV['VM_PROVIDER'] == 'vmware_workstation')
+      # If using vmware-workstation
+      web.vm.box = "phusion/ubuntu-14.04-amd64"
+      web.vm.box_check_update = true
+    else
+      # If using virtual box
+      web.vm.box = "ubuntu/trusty64"
+      web.vm.box_check_update = true
+    end
 
     # Configure network fun
     web.vm.network "private_network", ip: "10.0.0.10"
@@ -25,16 +34,26 @@ Vagrant.configure("2") do |config|
       web.vm.synced_folder "#{ENV['PROJECT_DIR']}", "/vagrant/public/#{ENV['SITE_ALIAS']}", type: "nfs"
     end
 
-    # Set VirtualBox settings
-    web.vm.provider "virtualbox" do |vb|
-      vb.name = "#{ENV['SITE_ALIAS']}"
-      vb.memory = "2000"
-      vb.cpus = "2"
+    # Use environment variables to set the guest
+    if (ENV['VM_PROVIDER'] == 'vmware_workstation')
+      # Set VMware Settings
+      web.vm.provider "vmware_workstation" do |vw|
+        vw.vmx["name"] = "#{ENV['SITE_ALIAS']}"
+        vw.vmx["memsize"] = "4000"
+        vw.vmx["numvcpus"] = "2"
+      end
+    else
+      # Set VirtualBox settings
+      web.vm.provider "virtualbox" do |vb|
+        vb.name = "#{ENV['SITE_ALIAS']}"
+        vb.memory = "2000"
+        vb.cpus = "2"
+      end
     end
 
     # Ensure latest version of chef is available
     # requires omnibus plugin for vagrant
-    web.omnibus.chef_version = :latest
+    web.omnibus.chef_version = '12.5.1'
 
     # Enable provisioning with chef solo
     web.vm.provision "chef_solo" do |chef|
