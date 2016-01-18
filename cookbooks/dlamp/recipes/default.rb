@@ -18,10 +18,18 @@
 # limitations under the License.
 #
 
+# Create Common Web Directory /var/www
+directory "/var/www" do
+  owner 'www-data'
+  group 'www-data'
+  mode '0755'
+  action :create
+end
+
 # Recipe Run List
 include_recipe "apt"
 include_recipe "logrotate"
-include_recipe "ssh_known_hosts"
+#include_recipe "ssh_known_hosts"
 include_recipe "apache2"
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_rewrite"
@@ -35,6 +43,7 @@ include_recipe "apache2::mod_expires"
 include_recipe "dlamp::mysql"
 include_recipe "sqlite"
 include_recipe "apqc_php::default"
+include_recipe "apqc_php::sapi_mod_php"
 include_recipe "apqc_php::module_mysql"
 include_recipe "apqc_php::module_gd"
 include_recipe "apqc_php::module_apc"
@@ -42,8 +51,8 @@ include_recipe "apqc_php::module_curl"
 include_recipe "apqc_php::module_mcrypt"
 include_recipe "apqc_php::module_memcache"
 include_recipe "apqc_php::module_memcached"
-include_recipe "apqc_php::module_uuid"
-include_recipe "apqc_php::module_yaml"
+#include_recipe "apqc_php::module_uuid"
+#include_recipe "apqc_php::module_yaml"
 include_recipe "php::module_sqlite3"
 include_recipe "apache2::mod_php5"
 include_recipe "apqc_php::drush"
@@ -52,3 +61,11 @@ include_recipe "xdebug"
 include_recipe "phpunit"
 include_recipe "dlamp::database"
 include_recipe "dlamp::git_checkout"
+
+execute 'install_yaml' do
+  command 'sudo pecl install yaml'
+end
+
+execute 'install_uuid' do
+  command 'sudo pecl install uuid'
+end

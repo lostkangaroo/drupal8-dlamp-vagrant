@@ -22,13 +22,19 @@ Chef::Log.info "Attempting to locate databag git_repo"
 
 if Chef::DataBag.list.key?('git_repo')
 
-  Chef::Log.info "databag loaded lets do stuff"
+  Chef::Log.info "git_repo data loaded"
    begin
     repos = data_bag('git_repo').collect do |item|
       repo = data_bag_item('git_repo', item)
 
-      directory '/var/www/' do
-        mode "777"
+      # whole sale make sure the destination is writeable
+      directory "#{repo['destination']}" do
+        mode "0777"
+      end
+
+      # add the git repo to known hosts so we don't have issues pulling things in
+      ssh_known_hosts repo['fdqn'] do
+        user "vagrant"
       end
 
       if not repo['revision']
@@ -37,6 +43,8 @@ if Chef::DataBag.list.key?('git_repo')
       end
 
       if repo['deploy_key']
+        Chef::Log.info "Adding deploy key to Vagrant user"
+
         # create a ssh key wrapper we can use if a deploy key is needed
         file "/home/vagrant/#{repo['id']}.git_wrapper.sh" do
           owner "vagrant"
@@ -44,13 +52,17 @@ if Chef::DataBag.list.key?('git_repo')
           content "#!/bin/sh\nexec /usr/bin/ssh -i /home/vagrant/.ssh/#{repo['id']}.deploy_rsa \"$@\""
         end
 
+        # create the key itself to be used
         file "/home/vagrant/.ssh/#{repo['id']}.deploy_rsa" do
           owner "vagrant"
           mode "0600"
           content repo['deploy_key']
         end
 
-        Chef::Log.info "Adding deploy key to Vagrant user"
+        # add this key to ssh config file
+        ssh_config repo['fdqn'] do
+          options 'User' => 'git', 'IdentityFile' => "/home/vagrant/.ssh/#{repo['id']}.deploy_rsa"
+        end
       end
 
       git repo['destination'] do
