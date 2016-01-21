@@ -7,4 +7,9 @@ node['vhost'].each do |host|
     docroot "#{host['www_root']}"
     allow_override "#{host['allow_override']}"
   end
+
+  hostsfile_entry '127.0.0.1' do
+    hostname "#{host['localhost_alias']}"
+    action :append
+  end
 end
