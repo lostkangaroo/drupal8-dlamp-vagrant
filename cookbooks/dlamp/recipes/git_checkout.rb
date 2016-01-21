@@ -21,9 +21,7 @@
 Chef::Log.info "Attempting to locate databag git_repo"
 
 if Chef::DataBag.list.key?('git_repo')
-
-  Chef::Log.info "git_repo data loaded"
-   begin
+  begin
     repos = data_bag('git_repo').collect do |item|
       repo = data_bag_item('git_repo', item)
 
@@ -39,12 +37,9 @@ if Chef::DataBag.list.key?('git_repo')
 
       if not repo['revision']
         repo['revision'] = "HEAD"
-        Chef::Log.info "No Repo Revision, using HEAD"
       end
 
       if repo['deploy_key']
-        Chef::Log.info "Adding deploy key to Vagrant user"
-
         # create a ssh key wrapper we can use if a deploy key is needed
         file "/home/vagrant/#{repo['id']}.git_wrapper.sh" do
           owner "vagrant"
@@ -79,7 +74,7 @@ if Chef::DataBag.list.key?('git_repo')
         mode "777"
       end
     end
-   rescue
-     Chef::Log.info "Could not load data bag 'git_repo'"
-   end
+  rescue
+    Chef::Log.info "Could not load data bag 'git_repo'"
+  end
 end
