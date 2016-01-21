@@ -1,0 +1,25 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: 11.16.4
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: append
+    run_list: fake::append
+  - name: append_existing
+    run_list: fake::append_existing
+  - name: create
+    run_list: fake::create
+  - name: create_if_missing
+    run_list: fake::create_if_missing
+  - name: default
+    run_list: fake::default
+  - name: options
+    run_list: fake::options
+  - name: unique
+    run_list: fake::unique
