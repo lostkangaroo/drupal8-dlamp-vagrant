@@ -1,8 +1,8 @@
 #
 # Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
 # Cookbook Name:: dlamp
-# Recipe:: drupal_repo
-# Description:: Clones Drupal Repo specific to version
+# Recipe:: git_checkout
+# Description:: Clones a Git repo from specific locations with or without rsa keys
 #   Development Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
