@@ -18,12 +18,12 @@
 # limitations under the License.
 #
 
-Chef::Log.info "Attempting to locate databag git_repo"
+Chef::Log.info "Attempting to locate databag dlamp_git_repo"
 
-if Chef::DataBag.list.key?('git_repo')
+if Chef::DataBag.list.key?('dlamp_git_repo')
   begin
-    repos = data_bag('git_repo').collect do |item|
-      repo = data_bag_item('git_repo', item)
+    repos = data_bag('dlamp_git_repo').collect do |item|
+      repo = data_bag_item('dlamp_git_repo', item)
 
       # whole sale make sure the destination is writeable
       directory "#{repo['destination']}" do
@@ -75,6 +75,6 @@ if Chef::DataBag.list.key?('git_repo')
       end
     end
   rescue
-    Chef::Log.info "Could not load data bag 'git_repo'"
+    Chef::Log.info "Could not load data bag 'dlamp_git_repo'"
   end
 end
