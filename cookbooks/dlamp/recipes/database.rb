@@ -18,12 +18,29 @@
 # limitations under the License.
 #
 
+Chef::Log.info "Attempting to locate databag dlamp_database"
+
+if Chef::DataBag.list.key?('dlamp_database')
+  begin
+    node['dlamp_database'] ||= []
+
+    databases = data_bag('dlamp_database').collect do |item|
+      database = data_bag_item('dlamp_database', item)
+
+      node['dlamp_database'] << database
+    end
+
+  rescue
+    Chef::Log.info "Could not load data bag 'dlamp_database'"
+  end
+end
+
 mysql2_chef_gem 'default' do
   action :install
 end
 
-if node['drupal_database']
-  node['drupal_database'].each do |db|
+if node['dlamp_database']
+  node['dlamp_database'].each do |db|
     mysql_database db['db_name'] do
       connection(
         :host => '127.0.0.1',
@@ -31,6 +48,15 @@ if node['drupal_database']
         :password => node['mysql']['server_root_password']
       )
       action :create
+    end
+
+    db['db_users'].each do |user|
+      mysql_database_user user['username'] do
+        connection connection_info
+        password user['password']
+        host '%'
+        action :grant
+      end
     end
   end
 end
