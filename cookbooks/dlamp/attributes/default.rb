@@ -40,3 +40,6 @@ default['apqc_php']['ini_defaults']['PHP']['display_errors'] = 'On'
 default['mysql']['server_root_password'] = 'root'
 default['mysql']['allow_remote_root'] = true
 default['mysql']['bind_address'] = "0.0.0.0"
+
+# DLAMP
+default['dlamp_database'] = []
