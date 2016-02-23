@@ -43,3 +43,4 @@ default['mysql']['bind_address'] = "0.0.0.0"
 
 # DLAMP
 default['dlamp_database'] = []
+default['dlamp']['git_checkout'] = []
