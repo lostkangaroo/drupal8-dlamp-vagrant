@@ -25,7 +25,7 @@ if Chef::DataBag.list.key?('dlamp_database')
     databases = data_bag('dlamp_database').collect do |item|
       database = data_bag_item('dlamp_database', item)
 
-      node['dlamp_database'] << database
+      node['dlamp']['database'] << database
     end
 
   rescue
@@ -37,7 +37,7 @@ mysql2_chef_gem 'default' do
   action :install
 end
 
-if node['dlamp_database']
+if node['dlamp']['database']
 
   connection_info = {
     :host => '127.0.0.1',
@@ -45,7 +45,7 @@ if node['dlamp_database']
     :password => node['mysql']['server_root_password']
   }
 
-  node['dlamp_database'].each do |db|
+  node['dlamp']['database'].each do |db|
     mysql_database db['db_name'] do
       connection connection_info
       action :create

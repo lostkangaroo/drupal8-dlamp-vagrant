@@ -42,4 +42,6 @@ default['mysql']['allow_remote_root'] = true
 default['mysql']['bind_address'] = "0.0.0.0"
 
 # DLAMP
-default['dlamp_database'] = []
+default['dlamp']['git_checkout'] = []
+default['dlamp']['database'] = []
+default['dlamp']['scripts'] = []
