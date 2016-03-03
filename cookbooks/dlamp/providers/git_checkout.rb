@@ -1,8 +1,7 @@
 #
 # Author:: James Gilliland
 # Cookbook Name:: dlamp
-# Recipe:: database
-# Description:: Creates empty default database
+# Description:: Resource Providers to do the heavy lifting with repo clones
 #   Development Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,9 +28,7 @@ action :create do
   end
 
   # add the git repo to known hosts so we don't have issues pulling things in
-  # ssh_known_hosts repo['fdqn'] do
-  #   user "vagrant"
-  # end
+  ssh_known_hosts_entry new_resource.fdqn
 
   if !new_resource.deploy_key.empty?
     # create a ssh key wrapper we can use if a deploy key is needed

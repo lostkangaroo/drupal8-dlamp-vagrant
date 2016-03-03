@@ -27,7 +27,6 @@ directory "/var/www" do
 end
 
 # Recipe Run List
-include_recipe "dlamp::git_checkout"
 include_recipe "apt"
 include_recipe "logrotate"
 include_recipe "apache2"
@@ -70,4 +69,5 @@ include_recipe "vhost"
 include_recipe "xdebug"
 include_recipe "phpunit"
 include_recipe "dlamp::database"
+include_recipe "dlamp::git_checkout"
 include_recipe "dlamp::scripts"

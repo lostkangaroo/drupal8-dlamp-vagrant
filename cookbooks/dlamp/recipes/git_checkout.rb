@@ -25,12 +25,16 @@ if Chef::DataBag.list.key?('dlamp_git_checkout')
     repos = data_bag('dlamp_git_checkout').collect do |item|
       repo = data_bag_item('dlamp_git_checkout', item)
 
-      node['dlamp']['git_checkout'] << repo
+      dlamp_git_checkout repo['id'] do
+        destination repo['destination']
+        deploy_key repo['deploy_key']
+        repo repo['repo']
+        revision repo['revision']
+        fdqn repo['fdqn']
+      end
     end
-
-    Chef::Log.info puts node['dlamp']['git_checkout']
   rescue
-    Chef::Log.info "Could not load data bag 'dlamp_git_checkout'"
+    Chef::Log.warn "Could not load data bag 'dlamp_git_checkout'"
   end
 end
 
