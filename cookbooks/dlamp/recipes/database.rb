@@ -25,20 +25,18 @@ end
 Chef::Log.info "Attempting to locate databag dlamp_database"
 
 if Chef::DataBag.list.key?('dlamp_database')
-  #begin
+  begin
     dlamp_dbs = data_bag('dlamp_database').collect do |item|
       db = data_bag_item('dlamp_database', item)
-
-      Chef::Log.info db['db_name']
 
       dlamp_database db['db_name'] do
         users db['db_users']
         action :create
       end
     end
-  #rescue
-  #  Chef::Log.warn "Could not load data bag 'dlamp_database'"
-  #end
+  rescue
+    Chef::Log.warn "Could not load data bag 'dlamp_database'"
+  end
 end
 
 if node['dlamp']['database']
