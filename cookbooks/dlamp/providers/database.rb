@@ -1,7 +1,6 @@
 #
 # Author:: Andrew Jungklaus <lostkangaroo@lostkangaroo.net>
 # Cookbook Name:: dlamp
-# Recipe:: database
 # Description:: Creates empty default database
 #   Development Environment
 #
@@ -18,33 +17,31 @@
 # limitations under the License.
 #
 
-mysql2_chef_gem 'default' do
-  action :install
+def load_current_resource
+  #
 end
 
-Chef::Log.info "Attempting to locate databag dlamp_database"
+action :create do
+  Chef::Log.info new_resource.name
 
-if Chef::DataBag.list.key?('dlamp_database')
-  #begin
-    dlamp_dbs = data_bag('dlamp_database').collect do |item|
-      db = data_bag_item('dlamp_database', item)
+  connection_info = {
+    host: '127.0.0.1',
+    username: 'root',
+    password: node['mysql']['server_root_password']
+  }
 
-      Chef::Log.info db['db_name']
+  mysql_database new_resource.name do
+    connection connection_info
+    action :create
+  end
 
-      dlamp_database db['db_name'] do
-        users db['db_users']
-        action :create
-      end
-    end
-  #rescue
-  #  Chef::Log.warn "Could not load data bag 'dlamp_database'"
-  #end
-end
-
-if node['dlamp']['database']
-  node['dlamp']['database'].each do |db|
-    dlamp_database db['db_name'] do
-      users db['db_users']
+  new_resource.users.each do |user, pass|
+    mysql_database_user user do
+      connection connection_info
+      database_name new_resource.name
+      password pass
+      host '%'
+      action :grant
     end
   end
 end
