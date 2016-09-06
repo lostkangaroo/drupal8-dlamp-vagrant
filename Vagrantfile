@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
     if (ENV['VM_PROVIDER'] == 'vmware_workstation')
       # Set VMware Settings
       web.vm.provider "vmware_workstation" do |vw|
+        vw.gui = true
         vw.vmx["name"] = "#{ENV['SITE_ALIAS']}"
         vw.vmx["memsize"] = "4000"
         vw.vmx["numvcpus"] = "2"

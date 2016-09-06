@@ -9,7 +9,7 @@ if Chef::DataBag.list.key?('vhost')
       node['vhost'] << vhost
     end
   rescue
-    Chef::Log.info "Could not load data bag 'vhost'"
+    Chef::Log.warn "Could not load data bag 'vhost'"
   end
 end
 
